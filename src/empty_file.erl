@@ -1,13 +1,11 @@
 %%%-------------------------------------------------------------------
-%%% @author hipernx
-%%% @copyright (C) 2016, <COMPANY>
+%%% @author Gustaf Nilstadius
+%%% @copyright (C) 2016
 %%% @doc
 %%%
 %%% @end
-%%% Created : 14. Feb 2016 18:08
 %%%-------------------------------------------------------------------
--module(empty_file).
--author("hipernx").
 
-%% API
--export([]).
+
+%%  This is a notepad
+%%TODO Read the instructions
