@@ -10,3 +10,5 @@
 
 %% API
 -export([]).
+
+%%TODO Create genereic server with finite state machine
