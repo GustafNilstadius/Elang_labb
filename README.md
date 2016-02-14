@@ -1,5 +1,5 @@
 # Elang labb
-Erlang labboration for KTH.
+Erlang laboratory exercise for a course at the Royal Institute of Technology (KTH).
 
 
 Donne in cooperation with Robin Duda.
