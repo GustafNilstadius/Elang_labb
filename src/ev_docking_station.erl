@@ -37,9 +37,11 @@ init([{Total, Occupied}]) ->
   {ok, {idle, {Total, Occupied}}}.
 
 handle_call(release, _, {empty, State}) ->
-  {Reply, NewState} = docking:release(State)
-  {reply, Reply, NewState}.
-handle_call(release, _, {_, })
+  {Reply, NewState} = docking:release(State),
+  {reply, Reply, NewState};
+handle_call(secure, _, State) ->
+  {Reply, NewState} = docking:secure(State),
+  {reply, Reply, NewState};
 
 
 handle_cast(Request, State) ->

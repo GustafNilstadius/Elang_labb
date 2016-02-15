@@ -4,6 +4,7 @@
 %%% @doc
 %%%
 %%% @end
+%%% @deprecated Not up to date du to changes in program architecture.
 %%% Created : 15. Feb 2016 12:42
 %%%-------------------------------------------------------------------
 -module(docking_TEST).
