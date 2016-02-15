@@ -9,8 +9,14 @@
 -author("Gustaf Nilstadius").
 
 %% API
--export([release/1, secure/1, get_info/1]).
+-export([release/1, secure/1, get_info/1, init/1]).
 
+init({Total, Total}) ->
+  {ok, {full, {Total, Total}}};
+init({Total, 0}) ->
+  {ok, {empty, {Total, 0}}};
+init({Total, Occupied}) ->
+  {ok, {idle, {Total, Occupied}}}.
 
 release({empty, {Total, 0}}) ->
   {{error, empty}, {empty, {Total, 0}}};

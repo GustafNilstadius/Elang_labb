@@ -44,7 +44,7 @@ release_all() ->
   io:format(" 1", []),
   ok = ev_docking_station:release_cycle(Ref),
   io:format(" 2", []),
-  {error, empty} = release_cycle(Ref),
+  {error, empty} = ev_docking_station:release_cycle(Ref),
   io:format(" - ok\n", []).
 
 secure_all() ->
