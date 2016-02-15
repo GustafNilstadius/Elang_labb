@@ -13,14 +13,14 @@
 
 init(0, _) ->
   {error,invalid_total};
-init(Total, Occupied) when Occupied < 0 ->
+init(_, Occupied) when Occupied < 0 ->
   {error,invalid_occupied};
 init(Total, Occupied) when Occupied > Total ->
   {error,invalid_occupied};
 init(Total, Occupied) ->
   {ok, {Total, Occupied}}.
 
-release({Total, 0}) ->
+release({_, 0}) ->
   {error, empty};
 release({Total, Occupied}) ->
   {ok, {Total, Occupied-1}}.

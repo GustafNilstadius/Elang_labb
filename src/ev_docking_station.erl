@@ -12,3 +12,6 @@
 -export([]).
 
 %%TODO Create genereic server with finite state machine
+
+start_link(Total, Occupied) ->
+  {ok, _} = gen_server:start_link({local, })
