@@ -22,45 +22,34 @@ all() ->
   release_all(),
   info_all().
 
-
 init_all() ->
   io:format("Running init_all", []),
-  io:format(" 1", []),
-  {ok, {3,1}} = docking:init(3,1),
-  io:format(" 2", []),
-  {ok, {50,50}} = docking:init(50,50),
-  io:format(" 3", []),
-  {error, invalid_occupied} = docking:init(50,51),
-  io:format(" 4", []),
-  {error, invalid_occupied} = docking:init(50,-1),
-  io:format(" 5", []),
-  {error, invalid_total} = docking:init(0, 3),
+  {ok, {idle, {3, 1}}} = docking:init({3,1}),
+  {ok, {full, {3, 3}}} = docking:init({3, 3}),
+  {ok, {empty, {3, 0}}} = docking:init({3, 0}),
   io:format(" - ok\n", []).
 
 secure_all() ->
   io:format("Running secure_all", []),
-  {ok, DB} = {ok, {idle, {3, 1}}},
-  io:format(" 1", []),
+  {ok, DB} = docking:init({3, 1}),
   {ok, DB1} = docking:secure(DB),
-  io:format(" 2", []),
   {ok, DB2} = docking:secure(DB1),
-  io:format(" 3", []),
   {{error, full}, _} = docking:secure(DB2),
   io:format(" - ok\n", []).
 
 release_all() ->
   io:format("Running init_all", []),
-  {ok, DB} = {ok, {idle, {3, 1}}},
-  io:format(" 1", []),
+  {ok, DB} = docking:init({3, 1}),
   {ok, DB1} = docking:release(DB),
-  io:format(" 2", []),
   {{error, empty}, _} = docking:release(DB1),
   io:format(" - ok\n", []).
 
-
 info_all() ->
   io:format("Running info_all", []),
-  {ok, [{total, 3}, {occupied, 2}, {free, 1}]} = docking:get_info({_, {3, 2}}),
-  {ok, [{total, 3}, {occupied, 0}, {free, 3}]} = docking:get_info({_, {3, 0}}),
-  {ok, [{total, 3}, {occupied, 3}, {free, 0}]} = docking:get_info({_, {3, 3}}),
+  {ok, Free} = docking:init({3, 2}),
+  {ok, Empty} = docking:init({3, 0}),
+  {ok, Full} = docking:init({3, 3}),
+  {ok, [{total, 3}, {occupied, 2}, {free, 1}]} = docking:get_info(Free),
+  {ok, [{total, 3}, {occupied, 0}, {free, 3}]} = docking:get_info(Empty),
+  {ok, [{total, 3}, {occupied, 3}, {free, 0}]} = docking:get_info(Full),
   io:format(" - ok\n").
