@@ -25,8 +25,8 @@ start_link(Total, Occupied) when Occupied > Total ->
   {error,invalid_occupied};
 start_link(Total, Occupied) ->
   %%TODO genereate servername
-  {ok, _} = gen_server:start_link({local, TODO}, ev_docking_station, [{Total, Occupied}], []),
-  {ok, Ref}.
+  {ok, _} = gen_server:start_link({local, _}, ev_docking_station, [{Total, Occupied}], []),
+  {ok, _}.
 
 
 %%#########GEN_SERVER###################################################################
