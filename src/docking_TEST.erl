@@ -2,11 +2,6 @@
 %%% @author Gustaf Nilstadius
 %%% @author Robin Duda
 %%% @copyright (C) 2016, <COMPANY>
-%%% @doc
-%%%
-%%% @end
-%%% @deprecated Not up to date du to changes in program architecture.
-%%% Created : 15. Feb 2016 12:42
 %%%-------------------------------------------------------------------
 -module(docking_TEST).
 -author("Gustaf Nilstadius").
