@@ -12,11 +12,11 @@
 -export([release/1, secure/1, get_info/1]).
 
 
-release({Total, 0}) ->
+release({empty, {Total, 0}}) ->
   {{error, empty}, {empty, {Total, 0}}};
-release({Total, 1}) ->
+release({idle, {Total, 1}}) ->
   {ok, {empty,{Total, 0}}};
-release({Total, Occupied}) ->
+release({_ ,{Total, Occupied}}) ->
   {ok, {idle, {Total, Occupied-1}}}.
 
 secure({Total, Total}) ->
