@@ -9,21 +9,15 @@
 -author("Gustaf Nilstadius").
 
 %% API
--export([release/1, secure/1, init/2, get_info/1]).
+-export([release/1, secure/1, get_info/1]).
 
-init(0, _) ->
-  {error,invalid_total};
-init(_, Occupied) when Occupied < 0 ->
-  {error,invalid_occupied};
-init(Total, Occupied) when Occupied > Total ->
-  {error,invalid_occupied};
-init(Total, Occupied) ->
-  {ok, {Total, Occupied}}.
 
-release({_, 0}) ->
-  {error, empty};
+release({Total, 0}) ->
+  {{error, empty}, {empty, {Total, 0}}};
+release({Total, 1}) ->
+  {ok, {empty,{Total, 0}}};
 release({Total, Occupied}) ->
-  {ok, {Total, Occupied-1}}.
+  {ok, {idle, {Total, Occupied-1}}}.
 
 secure({Total, Total}) ->
   {error, full};
