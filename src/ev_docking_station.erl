@@ -29,6 +29,8 @@ start_link(Total, Occupied) ->
   {ok, Ref}.
 
 
+%%#########GEN_SERVER###################################################################
+
 init([{Total, Total}]) ->
   {ok, {full, {Total, Total}}};
 init([{Total, 0}]) ->
@@ -42,6 +44,9 @@ handle_call(release, _, {empty, State}) ->
 handle_call(secure, _, State) ->
   {Reply, NewState} = docking:secure(State),
   {reply, Reply, NewState};
+handle_call(get_info, _, State) ->
+  Reply = docking:get_info(State),
+  {reply, Reply, State}.
 
 
 handle_cast(Request, State) ->

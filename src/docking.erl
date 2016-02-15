@@ -26,5 +26,5 @@ secure({_ ,{Total, Occupied}}) when Occupied+1 == Total ->
 secure({_ ,{Total, Occupied}}) ->
   {ok, {idle, {Total, Occupied+1}}}.
 
-get_info({Total, Occupied}) ->
+get_info({_ ,{Total, Occupied}}) ->
   {ok, [{total, Total}, {occupied, Occupied}, {free, Total-Occupied}]}.
