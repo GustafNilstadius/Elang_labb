@@ -17,15 +17,11 @@
 
 
 all() ->
-  io:format("Running ev_docking_station_TEST", []),
-  {ok, Ref} = ev_docking_station:start_link(3, 1),
-  ok = ev_docking_station:release_cycle(Ref),
-  {error, empty} = ev_docking_station:release_cycle(Ref),
-  ok = ev_docking_station:secure_cycle(Ref),
-  ok = ev_docking_station:secure_cycle(Ref),
-  ok = ev_docking_station:secure_cycle(Ref),
-  {error, full} = ev_docking_station:secure_cycle(Ref),
-  ev_docking_station:get_info(Ref),
+  io:format("Running ev_docking_station_TEST \n", []),
+  start_link_all(),
+  release_all(),
+  secure_all(),
+  get_info(),
   io:format(" - ok\n", []).
 
 
@@ -59,7 +55,7 @@ release_all() ->
 
 %% @deprecated
 secure_all() ->
-  io:format("Running secure_all", []),
+  io:format("Running secure_all ", []),
   {ok, Ref} = ev_docking_station:start_link(3, 1),
   io:format(" 1", []),
   ok = ev_docking_station:secure_cycle(Ref),
@@ -73,5 +69,5 @@ secure_all() ->
 get_info() ->
   io:format("Running get_info", []),
   {ok, Ref} = ev_docking_station:start_link(3, 1),
-  {ok, [{total, _}, {occupied, _}, {free, _}]} = ev_docking_station:get_info(),
+  {ok, [{total, _}, {occupied, _}, {free, _}]} = ev_docking_station:get_info(Ref),
   io:format(" - ok\n", []).

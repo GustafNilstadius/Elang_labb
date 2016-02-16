@@ -25,7 +25,7 @@ start_link(Total, Occupied) when Occupied > Total ->
   {error,invalid_occupied};
 start_link(Total, Occupied) ->
   %%TODO genereate servername
-   gen_fsm:start_link(?MODULE, [Total, Occupied], []).
+  gen_fsm:start_link(?MODULE, [Total, Occupied], []).
 
 
 release_cycle(Ref) ->
