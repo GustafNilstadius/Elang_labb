@@ -13,26 +13,24 @@
 -author("Gustaf Nilstadius").
 
 %% API
--export([all/0]).
+-export([all/0, start_link_all/0, release_all/0, secure_all/0, get_info/0]).
 
 
 all() ->
-  %%TODO complete bellow with tests
+  io:format("Running ev_docking_station_TEST", []),
   {ok, Ref} = ev_docking_station:start_link(3, 1),
-  ev_docking_station:release_cycle(Ref),
-  ev_docking_station:release_cycle(Ref),
-  ev_docking_station:secure_cycle(Ref),
-  ev_docking_station:secure_cycle(Ref),
-  ev_docking_station:secure_cycle(Ref),
-  ev_docking_station:secure_cycle(Ref),
-  ev_docking_station:get_info(Ref).
-  %%start_link_all(),
-  %%release_all(),
-  %%secure_all(),
-  %%get_info().
+  ok = ev_docking_station:release_cycle(Ref),
+  {error, empty} = ev_docking_station:release_cycle(Ref),
+  ok = ev_docking_station:secure_cycle(Ref),
+  ok = ev_docking_station:secure_cycle(Ref),
+  ok = ev_docking_station:secure_cycle(Ref),
+  {error, full} = ev_docking_station:secure_cycle(Ref),
+  ev_docking_station:get_info(Ref),
+  io:format(" - ok\n", []).
 
 
 
+%% @deprecated
 start_link_all() ->
   io:format("Running start_link_all", []),
   io:format(" 1", []),
@@ -49,6 +47,7 @@ start_link_all() ->
 
   io:format(" - ok\n", []).
 
+%% @deprecated
 release_all() ->
   io:format("Running release_all", []),
   {ok, Ref} = ev_docking_station:start_link(3, 1),
@@ -58,6 +57,7 @@ release_all() ->
   {error, empty} = ev_docking_station:release_cycle(Ref),
   io:format(" - ok\n", []).
 
+%% @deprecated
 secure_all() ->
   io:format("Running secure_all", []),
   {ok, Ref} = ev_docking_station:start_link(3, 1),
@@ -69,6 +69,7 @@ secure_all() ->
   {error, full} = ev_docking_station:secure_cycle(Ref),
   io:format(" - ok\n", []).
 
+%% @deprecated
 get_info() ->
   io:format("Running get_info", []),
   {ok, Ref} = ev_docking_station:start_link(3, 1),
