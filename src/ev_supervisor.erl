@@ -19,7 +19,6 @@ start_link() ->
   supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init(_) ->
-  my_db:start().
   {ok, {{simple_one_for_one, 2, 3600},
     [{docking_station, {ev_docking_station, start_link, []},
       permanent, 2000, worker, [test]}]}}.

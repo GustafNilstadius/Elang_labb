@@ -1,4 +1,7 @@
-# Elang labb
+*Ended project* 
+# Elang labb, KTH, Deprecated
+
+
 Erlang laboratory exercise for a course at the Royal Institute of Technology (KTH).
 
 

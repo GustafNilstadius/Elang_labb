@@ -7,7 +7,6 @@
 %%%   Tests all functions
 %%% @end
 %%% @deprecated Needs new tests
-%%% TODO rewrite tests
 %%%-------------------------------------------------------------------
 -module(ev_docking_station_TEST).
 -author("Gustaf Nilstadius").
