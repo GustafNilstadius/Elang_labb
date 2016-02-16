@@ -17,10 +17,19 @@
 
 
 all() ->
+  %%TODO complete bellow with tests
+  {ok, Ref} = ev_docking_station:start_link(3, 1),
+  ev_docking_station:release_cycle(Ref),
+  ev_docking_station:release_cycle(Ref),
+  ev_docking_station:secure_cycle(Ref),
+  ev_docking_station:secure_cycle(Ref),
+  ev_docking_station:secure_cycle(Ref),
+  ev_docking_station:secure_cycle(Ref),
+  ev_docking_station:get_info(Ref).
   %%start_link_all(),
-  release_all(),
-  secure_all(),
-  get_info().
+  %%release_all(),
+  %%secure_all(),
+  %%get_info().
 
 
 

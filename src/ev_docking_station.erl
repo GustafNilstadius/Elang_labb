@@ -31,10 +31,10 @@ start_link(Total, Occupied) ->
 
 
 release_cycle(Ref) ->
-  gen_server:call(Ref, release).
+  gen_fsm:sync_send_event(Ref, release).
 
 secure_cycle(Ref) ->
-  gen_server:call(Ref, secure).
+  gen_fsm:sync_send_event(Ref, secure).
 
 get_info(Ref) ->
   gen_fsm:sync_send_all_state_event(Ref, get_info).
@@ -51,37 +51,37 @@ init([Total, Occupied]) ->
 
 idle(release, _, State) ->
   {Reply, {NewState, Data}} = docking:release({idle, State}),
-  {reply, Reply, next_state, NewState, Data};
-idle(secucure, _, State) -> 
+  {reply, Reply, NewState, Data};
+idle(secure, _, State) ->
   {Reply, {NewState, Data}} = docking:secure({idle, State}),
-  {reply, Reply, next_state, NewState, Data}.
+  {reply, Reply, NewState, Data}.
 
 full(release, _, State) -> 
   {Reply, {NewState, Data}} = docking:release({full, State}),
-  {reply, Reply, next_state, NewState, Data};
-full(secucure, _, State) ->
-  {reply, {error, full}, next_state, full, State}.
+  {reply, Reply, NewState, Data};
+full(secure, _, State) ->
+  {reply, {error, full}, full, State}.
 
 empty(release, _, State) ->
-  {reply, {error, empty}, next_state, empty, State};
-empty(secucure, _, State) ->
+  {reply, {error, empty}, empty, State};
+empty(secure, _, State) ->
   {Reply, {NewState, Data}} = docking:secure({empty, State}),
-  {reply, Reply, next_state, NewState, Data}.
+  {reply, Reply, NewState, Data}.
 
 
 
-handle_event(Event, StateName, StateData) ->
+handle_event(_Event, _StateName, _StateData) ->
   erlang:error(not_implemented).
 
-handle_sync_event(Event, From, StateName, StateData) ->
+handle_sync_event(_Event, _From, StateName, StateData) ->
   Reply = docking:get_info({StateName, StateData}),
-  {reply, Reply, next_state, StateName, StateData}.
+  {reply, Reply, StateName, StateData}.
 
-handle_info(Info, StateName, StateData) ->
+handle_info(_Info, _StateName, _StateData) ->
   erlang:error(not_implemented).
 
-terminate(Reason, StateName, StateData) ->
-  erlang:error(not_implemented).
+terminate(_Reason, _StateName, _StateData) ->
+  ok.
 
-code_change(OldVsn, StateName, StateData, Extra) ->
+code_change(_OldVsn, _StateName, _StateData, _Extra) ->
   erlang:error(not_implemented).
