@@ -1,13 +1,21 @@
 %%%-------------------------------------------------------------------
-%%% @author hipernx
+%%% @author Gustaf Nilstadius
 %%% @copyright (C) 2016, <COMPANY>
 %%% @doc
 %%%
 %%% @end
-%%% Created : 16. Feb 2016 02:14
 %%%-------------------------------------------------------------------
 -module(ev_supervisor).
--author("hipernx").
+-author("Gustaf Nisladius").
+-behaviour(supervisor).
 
 %% API
--export([]).
+-export([init/1, start_link/0]).
+
+start_link() ->
+  supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+
+init(_) ->
+  {ok, {{simple_one_for_one, 2, 3600},
+    [{docking_station, {ev_docking_station, start_link, []},
+      permanent, 2000, worker, [test]}]}}.
