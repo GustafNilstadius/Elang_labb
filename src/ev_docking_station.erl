@@ -10,10 +10,8 @@
 -author("Gustaf Nilstadius").
 
 %% API
--export([init/1, handle_event/3, handle_sync_event/4, handle_info/3, terminate/3, code_change/4, full/3, full/3, empty/3, idle/3]).
+-export([init/1, handle_event/3, handle_sync_event/4, handle_info/3, terminate/3, code_change/4, full/3, empty/3, idle/3]).
 -export([start_link/2, release_cycle/1, secure_cycle/1, get_info/1]).
-
-%%TODO Create genereic server with finite state machine
 
 
 
@@ -24,7 +22,7 @@ start_link(_, Occupied) when Occupied < 0 ->
 start_link(Total, Occupied) when Occupied > Total ->
   {error,invalid_occupied};
 start_link(Total, Occupied) ->
-  %%TODO genereate servername
+  %%PID is unique identifier
   gen_fsm:start_link(?MODULE, [Total, Occupied], []).
 
 
