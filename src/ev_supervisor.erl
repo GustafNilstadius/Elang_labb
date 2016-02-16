@@ -10,7 +10,10 @@
 -behaviour(supervisor).
 
 %% API
--export([init/1, start_link/0]).
+-export([init/1, start_link/0, start_child/2]).
+
+start_child(Total, Occupied) ->
+  supervisor:start_child(?MODULE, [Total, Occupied]).
 
 start_link() ->
   supervisor:start_link({local, ?MODULE}, ?MODULE, []).
