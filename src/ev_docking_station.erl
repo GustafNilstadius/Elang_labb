@@ -10,7 +10,7 @@
 -author("Gustaf Nilstadius").
 
 %% API
--export([init/1, handle_event/3, handle_sync_event/4, handle_info/3, terminate/3, code_change/4]).
+-export([init/1, handle_event/3, handle_sync_event/4, handle_info/3, terminate/3, code_change/4, full/3, full/3, empty/3, idle/3]).
 -export([start_link/2, release_cycle/1, secure_cycle/1, get_info/1]).
 
 %%TODO Create genereic server with finite state machine
@@ -25,8 +25,9 @@ start_link(Total, Occupied) when Occupied > Total ->
   {error,invalid_occupied};
 start_link(Total, Occupied) ->
   %%TODO genereate servername
-  {ok, _} = gen_server:start_link({local, kakor}, ev_docking_station, [{Total, Occupied}], []),
-  {ok, kakor}.
+  Ref = docking,
+  {ok, _} = gen_fsm:start_link({local, Ref}, ?MODULE, [Total, Occupied], []),
+  {ok, Ref}.
 
 
 release_cycle(Ref) ->
@@ -41,19 +42,12 @@ get_info(Ref) ->
 %%#########GEN_FSM###################################################################
 
 
-init([{Total, Occupied}]) ->
+init([Total, Occupied]) ->
   process_flag(trap_exit, true),
-  docking:init({Total, Occupied}).
+  {_, {NewState, Data}} = docking:init({Total, Occupied}),
+  {ok, NewState, Data}.
 
-handle_call(release, _, State) ->
-  {Reply, NewState} = docking:release(State),
-  {reply, Reply, NewState};
-handle_call(secure, _, State) ->
-  {Reply, NewState} = docking:secure(State),
-  {reply, Reply, NewState};
-handle_call(get_info, _, State) ->
-  Reply = docking:get_info(State),
-  {reply, Reply, State}.
+
 
 idle(release, _, State) ->
   {Reply, {NewState, Data}} = docking:release({idle, State}),
@@ -64,12 +58,12 @@ idle(secucure, _, State) ->
 
 full(release, _, State) -> 
   {Reply, {NewState, Data}} = docking:release({full, State}),
-  {reply, Reply, next_state, NewState, Data}.
+  {reply, Reply, next_state, NewState, Data};
 full(secucure, _, State) ->
   {reply, {error, full}, next_state, full, State}.
 
 empty(release, _, State) ->
-  {reply, {error, empty}, next_state, empty, State}.
+  {reply, {error, empty}, next_state, empty, State};
 empty(secucure, _, State) ->
   {Reply, {NewState, Data}} = docking:secure({empty, State}),
   {reply, Reply, next_state, NewState, Data}.

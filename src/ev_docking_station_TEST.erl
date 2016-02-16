@@ -6,6 +6,8 @@
 %%% Usage: ev_docking_station_TEST:all().
 %%%   Tests all functions
 %%% @end
+%%% @deprecated Needs new tests
+%%% TODO rewrite tests
 %%%-------------------------------------------------------------------
 -module(ev_docking_station_TEST).
 -author("Gustaf Nilstadius").
@@ -15,7 +17,7 @@
 
 
 all() ->
-  start_link_all(),
+  %%start_link_all(),
   release_all(),
   secure_all(),
   get_info().
